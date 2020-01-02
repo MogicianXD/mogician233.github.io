@@ -1,594 +1,308 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Mogician zlf">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="数据科学导论实验_XML"/>
-  <meta property="og:description" content="" />
-  <meta property="og:site_name" content="Mogician的个人小站"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://yoursite.com"/>
-  
-    <link rel="alternate" href="/atom.xml" title="Mogician的个人小站" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>201700301037_赵立帆_实验七</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+svg[id^="mermaidChart"] { line-height: 1em; }
 
-  <!-- Site Title -->
-  <title>Mogician的个人小站</title>
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <!-- Custom CSS -->
-  
-  <link rel="stylesheet" href="/css/style.light.css">
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
 
-  <!-- Google Analytics -->
-  
 
+:root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
+html { font-size: 16px; }
+body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
+#write { max-width: 860px; margin: 0px auto; padding: 30px 30px 100px; }
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+a { color: rgb(65, 131, 196); }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 tt, h1 code { font-size: inherit; }
+h2 tt, h2 code { font-size: inherit; }
+h3 tt, h3 code { font-size: inherit; }
+h4 tt, h4 code { font-size: inherit; }
+h5 tt, h5 code { font-size: inherit; }
+h6 tt, h6 code { font-size: inherit; }
+h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+h3 { font-size: 1.5em; line-height: 1.43; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 1em; color: rgb(119, 119, 119); }
+p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
+li > ol, li > ul { margin: 0px; }
+hr { height: 2px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border: 0px none; overflow: hidden; box-sizing: content-box; }
+li p.first { display: inline-block; }
+ul, ol { padding-left: 30px; }
+ul:first-child, ol:first-child { margin-top: 0px; }
+ul:last-child, ol:last-child { margin-bottom: 0px; }
+blockquote { border-left: 4px solid rgb(223, 226, 229); padding: 0px 15px; color: rgb(119, 119, 119); }
+blockquote blockquote { padding-right: 0px; }
+table { padding: 0px; word-break: initial; }
+table tr { border-top: 1px solid rgb(223, 226, 229); margin: 0px; padding: 0px; }
+table tr:nth-child(2n), thead { background-color: rgb(248, 248, 248); }
+table tr th { font-weight: bold; border-width: 1px 1px 0px; border-top-style: solid; border-right-style: solid; border-left-style: solid; border-top-color: rgb(223, 226, 229); border-right-color: rgb(223, 226, 229); border-left-color: rgb(223, 226, 229); border-image: initial; border-bottom-style: initial; border-bottom-color: initial; margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid rgb(223, 226, 229); margin: 0px; padding: 6px 13px; }
+table tr th:first-child, table tr td:first-child { margin-top: 0px; }
+table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
+.CodeMirror-lines { padding-left: 4px; }
+.code-tooltip { box-shadow: rgba(0, 28, 36, 0.3) 0px 1px 1px 0px; border-top: 1px solid rgb(238, 242, 242); }
+.md-fences, code, tt { border: 1px solid rgb(231, 234, 237); background-color: rgb(248, 248, 248); border-radius: 3px; padding: 2px 4px 0px; font-size: 0.9em; }
+code { background-color: rgb(243, 244, 244); padding: 0px 2px; color: rgb(178, 34, 34); }
+.md-fences { margin-bottom: 15px; margin-top: 15px; padding-top: 8px; padding-bottom: 6px; }
+.md-task-list-item > input { margin-left: -1.3em; }
+@media print {
+  html { font-size: 13px; }
+  table, pre { break-inside: avoid; }
+  pre { overflow-wrap: break-word; }
+}
+.md-fences { background-color: rgb(248, 248, 248); }
+#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+.md-mathjax-midline { background: rgb(250, 250, 250); }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+.md-image > .md-meta { border-radius: 3px; padding: 2px 0px 0px 4px; font-size: 0.9em; color: inherit; }
+.md-tag { color: rgb(167, 167, 167); opacity: 1; }
+.md-toc { margin-top: 20px; padding-bottom: 20px; }
+.sidebar-tabs { border-bottom: none; }
+#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
+header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Arial, sans-serif; }
+.file-node-content:hover .file-node-icon, .file-node-content:hover .file-node-open-state { visibility: visible; }
+.mac-seamless-mode #typora-sidebar { background-color: var(--side-bar-bg-color); }
+.md-lang { color: rgb(180, 101, 77); }
+.html-for-mac .context-menu { --item-hover-bg-color: #E6F0FE; }
+#md-notification .btn { border: 0px; }
+.dropdown-menu .divider { border-color: rgb(229, 229, 229); }
+.ty-preferences .window-content { background-color: rgb(250, 250, 250); }
+.ty-preferences .nav-group-item.active { color: white; background: rgb(153, 153, 153); }
+
+
+</style>
 </head>
-
-  <body>
-    <!-- Page Header -->
-
-
-<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">数据科学导论实验_XML</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/<your-github-username>" target="_blank" rel="noopener">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:<your-email-address>" target="_blank" rel="noopener">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By Mogician zlf</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2020-01-02</span>
-            <span class="time">20:28:39</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <h1 id="XML分析和提取"><a href="#XML分析和提取" class="headerlink" title="XML分析和提取"></a>XML分析和提取</h1><blockquote>
-<p>* 图片存在github图床上，请在可以连通github的网络环境中阅读，以免图片预览失效</p>
-</blockquote>
-<p>之前有用过xml.ElementTree包，而且Beautiful Soup的方法也差不多，所以lxml上手也挺快的；<br>另外要注意，文件夹下不能有和包同名的py，比如xml.py</p>
-<h3 id="xml解析"><a href="#xml解析" class="headerlink" title="xml解析"></a>xml解析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">parser = etree.XMLParser(recover=<span class="literal">True</span>)</span><br><span class="line">tree = etree.parse(<span class="string">'reviews/video/reviews.xml'</span>,parser)</span><br><span class="line">root = tree.getroot()</span><br><span class="line">root</span><br></pre></td></tr></table></figure>
-
-
-<pre><code>&lt;Element reviews at 0x289a8d440c8&gt;</code></pre><p>报错，<code>&#39;utf-8&#39; codec can&#39;t decode byte 0xe8 in position 3278: invalid continuation byte</code></p>
-<p>utf-8解码没毛病，应当是文件的编码有问题，SublimeText里改一下文件的编码就不报错了</p>
-<h3 id="转为pandas"><a href="#转为pandas" class="headerlink" title="转为pandas"></a>转为pandas</h3><p>观察文件可以看到，reviews包含多个review，review为一行，11个字段，<br>其中<code>unique_id</code>和<code>product_type</code>字段各自重复了两次，需要合并为list</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">lists = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> review <span class="keyword">in</span> root.findall(<span class="string">'review'</span>):</span><br><span class="line">    id_list = [j.text.strip() <span class="keyword">for</span> j <span class="keyword">in</span> review.findall(<span class="string">"unique_id"</span>)]</span><br><span class="line">    asin = review.find(<span class="string">"asin"</span>).text.strip()</span><br><span class="line">    product_name = review.find(<span class="string">"product_name"</span>).text.strip()</span><br><span class="line">    type_list = [j.text.strip() <span class="keyword">for</span> j <span class="keyword">in</span> review.findall(<span class="string">"product_type"</span>)]</span><br><span class="line">    helpful = review.find(<span class="string">"helpful"</span>).text.strip()</span><br><span class="line">    rating = review.find(<span class="string">"rating"</span>).text.strip()</span><br><span class="line">    title = review.find(<span class="string">"title"</span>).text.strip()</span><br><span class="line">    date = review.find(<span class="string">"date"</span>).text.strip()</span><br><span class="line">    reviewer = review.find(<span class="string">"reviewer"</span>).text.strip()</span><br><span class="line">    reviewer_location = review.find(<span class="string">"reviewer_location"</span>).text.strip()</span><br><span class="line">    review_text = review.find(<span class="string">"review_text"</span>)</span><br><span class="line">    review_text = review_text.text.strip() <span class="keyword">if</span> review_text <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">else</span> <span class="string">""</span> </span><br><span class="line"></span><br><span class="line">    lists.append([id_list, asin, product_name, type_list, </span><br><span class="line">                    helpful, rating, title, date, reviewer,</span><br><span class="line">                    reviewer_location, review_text])</span><br><span class="line"></span><br><span class="line">cols = [<span class="string">'unique_id'</span>, <span class="string">'asin'</span>, <span class="string">'product_name'</span>, <span class="string">'product_type'</span>,<span class="string">"helpful"</span>,<span class="string">"rating"</span>,<span class="string">"title"</span>,<span class="string">"date"</span>,<span class="string">"reviewer"</span>,<span class="string">"reviewer_location"</span>,<span class="string">"review_text"</span>]</span><br><span class="line">df = pd.DataFrame(lists, columns=cols)</span><br><span class="line">df.head(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="right"></th>
-<th align="left">unique_id</th>
-<th align="center">asin</th>
-<th align="left">product_name</th>
-<th align="left">product_type</th>
-<th align="left">helpful</th>
-<th align="center">rating</th>
-<th align="center">title</th>
-<th align="center">date</th>
-<th align="left">reviewer</th>
-<th align="left">reviewer_location</th>
-<th align="left">review_text</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="right">0</td>
-<td align="left">[B00006IUOZ :disappointi…</td>
-<td align="center">B00006I UOZ</td>
-<td align="left">Insomnia: Video: Al Pacino,Martin Donovan (II)…</td>
-<td align="left">[video, video]</td>
-<td align="left">1 of 2</td>
-<td align="center">2.0</td>
-<td align="center">Disappointing in more ways than as a remake</td>
-<td align="center">October 5, 2005</td>
-<td align="left">PipBoy</td>
-<td align="left">particularly the internal affairs sub-plot</td>
-<td align="left">It’s not just that this film is a bloated rema…</td>
-</tr>
-<tr>
-<td align="right">1</td>
-<td align="left">[B00006JE7V :disappointi…</td>
-<td align="center">B00006 JE7V</td>
-<td align="left">Insomnia (2002) (Spanish) (Sub): Video: Al Pac…</td>
-<td align="left">[video, video]</td>
-<td align="left">1 of 2</td>
-<td align="center">2.0</td>
-<td align="center">Disappointing in more ways than as a remake</td>
-<td align="center">October 5, 2005</td>
-<td align="left">PipBoy</td>
-<td align="left">particularly the internal affairs sub-plot</td>
-<td align="left">It’s not just that this film is a bloated rema…</td>
-</tr>
-<tr>
-<td align="right">2</td>
-<td align="left">[1569494088 :ambrose_b…</td>
-<td align="center">156949 4088</td>
-<td align="left">Schoolhouse Rock! - America Rock: Video: Jack …</td>
-<td align="left">[video, video]</td>
-<td align="left">0 of 18</td>
-<td align="center">1.0</td>
-<td align="center">Ambrose Bierce is a Better Authority</td>
-<td align="center">July 28, 2004</td>
-<td align="left">Charlotte Tellson “The Keeper of Bierce”</td>
-<td align="left"></td>
-<td align="left">I have rented this video for the sake of a tri…</td>
-</tr>
-</tbody></table>
-<h3 id="输出保存"><a href="#输出保存" class="headerlink" title="输出保存"></a>输出保存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> df.iterrows():</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'reviews/output/review_text&#123;&#125;.txt'</span>.format(<span class="string">'%05d'</span> % i), <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        review_text = row[<span class="number">1</span>][<span class="string">'review_text'</span>]</span><br><span class="line">        <span class="keyword">if</span> review_text != <span class="string">""</span>:</span><br><span class="line">            f.write(review_text)</span><br><span class="line">        i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="Stanfordparser的使用（NLP）"><a href="#Stanfordparser的使用（NLP）" class="headerlink" title="Stanfordparser的使用（NLP）"></a>Stanfordparser的使用（NLP）</h1><p>Stanfordparser在Linux下和windows下都可以运行，<br>对应运行的文件后缀分别是sh和bat，<br>另外这个工具还提供了GUI</p>
-<h3 id="加载解析器"><a href="#加载解析器" class="headerlink" title="加载解析器"></a>加载解析器</h3><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209201933.png" style="zoom: 60%"></img></p>
-<p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209202046.png" style="zoom: 67%"></img></p>
-<h3 id="加载文件"><a href="#加载文件" class="headerlink" title="加载文件"></a>加载文件</h3><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209202240.png" alt=""></p>
-<h3 id="dependency-trees"><a href="#dependency-trees" class="headerlink" title="dependency trees"></a>dependency trees</h3><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209201730.png" style="zoom: 60%;"></img></p>
-<p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209202313.png" alt=""></p>
-<h3 id="lexparser修改"><a href="#lexparser修改" class="headerlink" title="lexparser修改"></a>lexparser修改</h3><p>因为我这里是windows环境，所以修改bat</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -mx150m -cp <span class="string">"*;"</span> edu.stanford.nlp.parser.lexparser.LexicalizedParser -outputFormat <span class="string">"penn,typedDependencies"</span> edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz %1</span><br></pre></td></tr></table></figure>
-<p>-mx150m:限定jvm最大内存，可以调大一些，否则碰见长句会报错中断</p>
-<p>另外<code>outputFormat</code>改成xml不行，需要改成<code>xmlTree</code></p>
-<p>查看输出文件：</p>
-<p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209201507.png" style="zoom: 40%;"></img></p>
-<h3 id="批量处理"><a href="#批量处理" class="headerlink" title="批量处理"></a>批量处理</h3><p>查到了bat怎么循环，但没查到数字怎么前面补0，换python做，但是不在改bat同路径下会报找不到类的错误，按网上改了<code>CLASSPATH</code>也不行，-cp后的改成绝对路径也不行，还是在StanfordParse文件夹里运行python了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line">filelist = os.listdir(<span class="string">'../reviews/output'</span>)</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> tqdm(filelist):</span><br><span class="line">    os.system(<span class="string">r'.\dependencyparser.bat ../reviews/output/review_text&#123;0&#125;.txt &gt; ../reviews_xml/review_parsed&#123;0&#125;.xml'</span>.format(file[<span class="number">11</span>:<span class="number">-4</span>]))</span><br></pre></td></tr></table></figure>
-
-<p>这样可以是可以….但是估摸着需要15个小时才能跑完，太慢了，还是扔linux服务器上跑了</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 0 15351)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  id=`<span class="built_in">printf</span> <span class="string">"%05d"</span> <span class="variable">$i</span>`</span><br><span class="line">  <span class="built_in">echo</span> $(./dependencyparser.sh <span class="string">"../reviews/output/review_text"</span><span class="variable">$id</span><span class="string">".txt"</span> &gt; <span class="string">"../reviews_xml/review_parsed"</span><span class="variable">$id</span><span class="string">".xml"</span>)</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<p>然后跑了一夜</p>
-<table>
-<thead>
-<tr>
-<th>文件</th>
-<th>文件大小(B)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>review_text</td>
-<td>63220</td>
-</tr>
-<tr>
-<td>review_parsed</td>
-<td>406324</td>
-</tr>
-</tbody></table>
-<h2 id="情感词提取"><a href="#情感词提取" class="headerlink" title="情感词提取"></a>情感词提取</h2><p>xml中需要注意的几种缩写如下所示：</p>
-<ul>
-<li><code>JJ</code>: adjective or numeral, ordinal 形容词或序数词，如great</li>
-<li><code>ADJP</code>：形容词短语，包裹了多个JJ</li>
-<li><code>NN</code>: 名词</li>
-<li><code>NP</code>: 名词短语</li>
-</ul>
-<p>我们想找到的句子一般是这样的结构：</p>
-<p><code>NP</code></p>
-<p>|– <code>JJ</code> /<code>ADJP</code> +</p>
-<p>|– <code>NN</code> {1,1}</p>
-<p>因为<code>NP</code>里可能嵌套<code>NP</code>，所以不能直接找<code>NP</code>，应该从底层<code>JJ</code>找起，找<code>JJ</code>上层最近的<code>NP</code>，然后往下找<code>NN</code>;</p>
-<p>不过，如果自下而上地查找，需要判断一下是不是同一个<code>NP</code>，如果是，放一个list里面，之后可以逗号隔开生成一个string</p>
-<p>也可以分别查找<code>NP</code>/<code>JJ</code>和<code>NP</code>/<code>ADJP</code>，再从<code>JJ</code>或者<code>ADJP</code>的父节点<code>NP</code>，再找下面的<code>NN</code>和所有的<code>JJ</code>、<code>ADJP</code></p>
-<p>因为一个文件输出的不是一个树，需要包裹一层再解析</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm_notebook</span><br><span class="line"></span><br><span class="line">result = []</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> tqdm_notebook(os.listdir(<span class="string">'./reviews_xml'</span>)):</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'./reviews_xml/'</span> + filename) <span class="keyword">as</span> f:</span><br><span class="line">        content = <span class="string">'&lt;root&gt;'</span> + <span class="string">''</span>.join(f.readlines()) + <span class="string">'&lt;/root&gt;'</span></span><br><span class="line">        tree = etree.XML(content)</span><br><span class="line">        dic = &#123;&#125;</span><br><span class="line">        nps = set() <span class="comment"># 存一下，防止地址被覆盖</span></span><br><span class="line">        <span class="keyword">for</span> jj <span class="keyword">in</span> tree.xpath(<span class="string">'//node[@value="NP"]/node[starts-with(@value, "JJ")]'</span>):</span><br><span class="line">            np = jj.getparent()</span><br><span class="line">            <span class="keyword">if</span> len(np.xpath(<span class="string">'./node[starts-with(@value, "NN")]'</span>)) == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            nn = np.xpath(<span class="string">'./node[starts-with(@value, "NN")]'</span>)[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">if</span> id(nn) <span class="keyword">not</span> <span class="keyword">in</span> dic:</span><br><span class="line">                dic[id(nn)] = [nn.find(<span class="string">'leaf'</span>).attrib[<span class="string">'value'</span>], jj.find(<span class="string">'leaf'</span>).attrib[<span class="string">'value'</span>]]</span><br><span class="line">                nps.add(np)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dic[id(nn)] += [jj.find(<span class="string">'leaf'</span>).attrib[<span class="string">'value'</span>]]</span><br><span class="line">                          </span><br><span class="line">        <span class="keyword">for</span> adjp <span class="keyword">in</span> tree.xpath(<span class="string">'//node[@value="NP"]/node[@value="ADJP"]'</span>):</span><br><span class="line">            np = adjp.getparent()</span><br><span class="line">            <span class="keyword">if</span> len(np.xpath(<span class="string">'./node[starts-with(@value, "NN")]'</span>)) == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            nn = np.xpath(<span class="string">'./node[starts-with(@value, "NN")]'</span>)[<span class="number">0</span>]</span><br><span class="line">            ad = <span class="string">" "</span>.join([leaf.attrib[<span class="string">'value'</span>] <span class="keyword">for</span> leaf <span class="keyword">in</span> adjp.xpath(<span class="string">'.//leaf'</span>)])</span><br><span class="line">            <span class="keyword">if</span> id(np) <span class="keyword">not</span> <span class="keyword">in</span> dic:</span><br><span class="line">                dic[id(np)] = [nn.find(<span class="string">'leaf'</span>).attrib[<span class="string">'value'</span>], ad]</span><br><span class="line">                nps.add(np)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dic[id(np)] += [ad]</span><br><span class="line">        result += [(value[<span class="number">0</span>], <span class="string">", "</span>.join(list(value[<span class="number">1</span>:]))) <span class="keyword">for</span> value <span class="keyword">in</span> dic.values()]</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209203543.png" alt=""></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(result, columns=[<span class="string">'target'</span>, <span class="string">'sentiment words or phase'</span>])</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="right"></th>
-<th align="right">target</th>
-<th>sentiment words or phase</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="right">0</td>
-<td align="right">remake</td>
-<td>bloated</td>
-</tr>
-<tr>
-<td align="right">1</td>
-<td align="right">thriller</td>
-<td>quick, clean, near-perfect, minimalist</td>
-</tr>
-<tr>
-<td align="right">2</td>
-<td align="right">affairs</td>
-<td>internal, moral</td>
-</tr>
-<tr>
-<td align="right">3</td>
-<td align="right">shell</td>
-<td>toned-down</td>
-</tr>
-<tr>
-<td align="right">4</td>
-<td align="right">performance</td>
-<td>believable</td>
-</tr>
-<tr>
-<td align="right">5</td>
-<td align="right">bit</td>
-<td>method-acting</td>
-</tr>
-<tr>
-<td align="right">6</td>
-<td align="right">scene</td>
-<td>single</td>
-</tr>
-<tr>
-<td align="right">7</td>
-<td align="right">imitation</td>
-<td>pale</td>
-</tr>
-<tr>
-<td align="right">8</td>
-<td align="right">roles</td>
-<td>better</td>
-</tr>
-<tr>
-<td align="right">9</td>
-<td align="right">performances</td>
-<td>fine</td>
-</tr>
-<tr>
-<td align="right">10</td>
-<td align="right">contemporaries</td>
-<td>adult</td>
-</tr>
-<tr>
-<td align="right">11</td>
-<td align="right">performances</td>
-<td>far-too-short</td>
-</tr>
-<tr>
-<td align="right">12</td>
-<td align="right">detective</td>
-<td>dangerously off-kilter</td>
-</tr>
-<tr>
-<td align="right">13</td>
-<td align="right">characters</td>
-<td>more complicated</td>
-</tr>
-<tr>
-<td align="right">14</td>
-<td align="right">director</td>
-<td>sublimely talented</td>
-</tr>
-<tr>
-<td align="right">15</td>
-<td align="right">hometown</td>
-<td>down-to-earth</td>
-</tr>
-<tr>
-<td align="right">16</td>
-<td align="right">change</td>
-<td>refreshing</td>
-</tr>
-<tr>
-<td align="right">17</td>
-<td align="right">remake</td>
-<td>bloated</td>
-</tr>
-<tr>
-<td align="right">18</td>
-<td align="right">thriller</td>
-<td>quick, clean, near-perfect, minimalist</td>
-</tr>
-<tr>
-<td align="right">19</td>
-<td align="right">affairs</td>
-<td>internal, moral</td>
-</tr>
-<tr>
-<td align="right">20</td>
-<td align="right">shell</td>
-<td>toned-down</td>
-</tr>
-<tr>
-<td align="right">21</td>
-<td align="right">performance</td>
-<td>believable</td>
-</tr>
-<tr>
-<td align="right">22</td>
-<td align="right">bit</td>
-<td>method-acting</td>
-</tr>
-<tr>
-<td align="right">23</td>
-<td align="right">scene</td>
-<td>single</td>
-</tr>
-<tr>
-<td align="right">24</td>
-<td align="right">imitation</td>
-<td>pale</td>
-</tr>
-<tr>
-<td align="right">25</td>
-<td align="right">roles</td>
-<td>better</td>
-</tr>
-<tr>
-<td align="right">26</td>
-<td align="right">performances</td>
-<td>fine</td>
-</tr>
-<tr>
-<td align="right">27</td>
-<td align="right">contemporaries</td>
-<td>adult</td>
-</tr>
-<tr>
-<td align="right">28</td>
-<td align="right">performances</td>
-<td>far-too-short</td>
-</tr>
-<tr>
-<td align="right">29</td>
-<td align="right">detective</td>
-<td>dangerously off-kilter</td>
-</tr>
-<tr>
-<td align="right">…</td>
-<td align="right">…</td>
-<td>…</td>
-</tr>
-<tr>
-<td align="right">124108</td>
-<td align="right">film</td>
-<td>Sci-Fi, Semi-Porn</td>
-</tr>
-<tr>
-<td align="right">124109</td>
-<td align="right">movies</td>
-<td>randy</td>
-</tr>
-<tr>
-<td align="right">124110</td>
-<td align="right">science</td>
-<td>hokey</td>
-</tr>
-<tr>
-<td align="right">124111</td>
-<td align="right">movies</td>
-<td>other, similar</td>
-</tr>
-<tr>
-<td align="right">124112</td>
-<td align="right">Features</td>
-<td>following, Special</td>
-</tr>
-<tr>
-<td align="right">124113</td>
-<td align="right">movie</td>
-<td>average</td>
-</tr>
-<tr>
-<td align="right">124114</td>
-<td align="right">sense</td>
-<td>commercial</td>
-</tr>
-<tr>
-<td align="right">124115</td>
-<td align="right">hokey</td>
-<td>average</td>
-</tr>
-<tr>
-<td align="right">124116</td>
-<td align="right">bodies</td>
-<td>great</td>
-</tr>
-<tr>
-<td align="right">124117</td>
-<td align="right">public</td>
-<td>sexually repressed</td>
-</tr>
-<tr>
-<td align="right">124118</td>
-<td align="right">male</td>
-<td>similarly attired</td>
-</tr>
-<tr>
-<td align="right">124119</td>
-<td align="right">sh</td>
-<td>scared</td>
-</tr>
-<tr>
-<td align="right">124120</td>
-<td align="right">vignette</td>
-<td>last and most bizarre</td>
-</tr>
-<tr>
-<td align="right">124121</td>
-<td align="right">sci-fi</td>
-<td>extremely weak</td>
-</tr>
-<tr>
-<td align="right">124122</td>
-<td align="right">star</td>
-<td>low four</td>
-</tr>
-<tr>
-<td align="right">124123</td>
-<td align="right">extravaganza</td>
-<td>better than your average hokey Sci-Fi Semi-Porn</td>
-</tr>
-<tr>
-<td align="right">124124</td>
-<td align="right">science</td>
-<td>erotic</td>
-</tr>
-<tr>
-<td align="right">124125</td>
-<td align="right">employee</td>
-<td>former</td>
-</tr>
-<tr>
-<td align="right">124126</td>
-<td align="right">bit</td>
-<td>least</td>
-</tr>
-<tr>
-<td align="right">124127</td>
-<td align="right">content</td>
-<td>sexual</td>
-</tr>
-<tr>
-<td align="right">124128</td>
-<td align="right">employers</td>
-<td>former</td>
-</tr>
-<tr>
-<td align="right">124129</td>
-<td align="right">knowledge</td>
-<td>very</td>
-</tr>
-<tr>
-<td align="right">124130</td>
-<td align="right">stories</td>
-<td>individual</td>
-</tr>
-<tr>
-<td align="right">124131</td>
-<td align="right">abduction</td>
-<td>alien</td>
-</tr>
-<tr>
-<td align="right">124132</td>
-<td align="right">pilot</td>
-<td>female</td>
-</tr>
-<tr>
-<td align="right">124133</td>
-<td align="right">planet</td>
-<td>distant</td>
-</tr>
-<tr>
-<td align="right">124134</td>
-<td align="right">number</td>
-<td>significant, lovely</td>
-</tr>
-<tr>
-<td align="right">124135</td>
-<td align="right">softcore</td>
-<td>impressive</td>
-</tr>
-<tr>
-<td align="right">124136</td>
-<td align="right">proof</td>
-<td>further</td>
-</tr>
-<tr>
-<td align="right">124137</td>
-<td align="right">movies</td>
-<td>best, erotic</td>
-</tr>
-</tbody></table>
-<p>124138 rows × 2 columns</p>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-
-
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
-  </div>
-</footer>
-
-
-    <!-- After Footer Scripts -->
-<script src="/js/highlight.pack.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
-  });
-</script>
-
-  </body>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node'><h1><a name="xml分析和提取" class="md-header-anchor"></a><span>XML分析和提取</span></h1><figure><table><thead><tr><th><span>姓名</span></th><th><span>赵立帆</span></th></tr></thead><tbody><tr><td><span>学号</span></td><td><span>201700301037</span></td></tr><tr><td><span>班级</span></td><td><span>17级软工6班</span></td></tr><tr><td><span>组别</span></td><td><span>25</span></td></tr></tbody></table></figure><blockquote><p><span>*</span><span> 图片存在github图床上，请在可以连通github的网络环境中阅读，以免图片预览失效</span></p></blockquote><p>&nbsp;</p><p><span>之前有用过xml.ElementTree包，而且Beautiful Soup的方法也差不多，所以lxml上手也挺快的；</span>
+<span>另外要注意，文件夹下不能有和包同名的py，比如xml.py</span></p><h3><a name="xml解析" class="md-header-anchor"></a><span>xml解析</span></h3><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">from</span> <span class="cm-variable">lxml</span> <span class="cm-keyword">import</span> <span class="cm-variable">etree</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">parser</span> = <span class="cm-variable">etree</span>.<span class="cm-property">XMLParser</span>(<span class="cm-variable">recover</span>=<span class="cm-keyword">True</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">tree</span> = <span class="cm-variable">etree</span>.<span class="cm-property">parse</span>(<span class="cm-string">'reviews/video/reviews.xml'</span>,<span class="cm-variable">parser</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">root</span> = <span class="cm-variable">tree</span>.<span class="cm-property">getroot</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">root</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 134px;"></div><div class="CodeMirror-gutters" style="display: none; height: 134px;"></div></div></div></pre><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;Element reviews at 0x289a8d440c8&gt;</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 22px;"></div><div class="CodeMirror-gutters" style="display: none; height: 22px;"></div></div></div></pre><p><span>报错，</span><code>&#39;utf-8&#39; codec can&#39;t decode byte 0xe8 in position 3278: invalid continuation byte</code></p><p><span>utf-8解码没毛病，应当是文件的编码有问题，SublimeText里改一下文件的编码就不报错了</span></p><h3><a name="转为pandas" class="md-header-anchor"></a><span>转为pandas</span></h3><p><span>观察文件可以看到，reviews包含多个review，review为一行，11个字段，</span>
+<span>其中</span><code>unique_id</code><span>和</span><code>product_type</code><span>字段各自重复了两次，需要合并为list</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">import</span> <span class="cm-variable">pandas</span> <span class="cm-keyword">as</span> <span class="cm-variable">pd</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">lists</span> = []</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">for</span> <span class="cm-variable">review</span> <span class="cm-keyword">in</span> <span class="cm-variable">root</span>.<span class="cm-property">findall</span>(<span class="cm-string">'review'</span>):</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">id_list</span> = [<span class="cm-variable">j</span>.<span class="cm-property">text</span>.<span class="cm-property">strip</span>() <span class="cm-keyword">for</span> <span class="cm-variable">j</span> <span class="cm-keyword">in</span> <span class="cm-variable">review</span>.<span class="cm-property">findall</span>(<span class="cm-string">"unique_id"</span>)]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">asin</span> = <span class="cm-variable">review</span>.<span class="cm-property">find</span>(<span class="cm-string">"asin"</span>).<span class="cm-property">text</span>.<span class="cm-property">strip</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">product_name</span> = <span class="cm-variable">review</span>.<span class="cm-property">find</span>(<span class="cm-string">"product_name"</span>).<span class="cm-property">text</span>.<span class="cm-property">strip</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">type_list</span> = [<span class="cm-variable">j</span>.<span class="cm-property">text</span>.<span class="cm-property">strip</span>() <span class="cm-keyword">for</span> <span class="cm-variable">j</span> <span class="cm-keyword">in</span> <span class="cm-variable">review</span>.<span class="cm-property">findall</span>(<span class="cm-string">"product_type"</span>)]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">helpful</span> = <span class="cm-variable">review</span>.<span class="cm-property">find</span>(<span class="cm-string">"helpful"</span>).<span class="cm-property">text</span>.<span class="cm-property">strip</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">rating</span> = <span class="cm-variable">review</span>.<span class="cm-property">find</span>(<span class="cm-string">"rating"</span>).<span class="cm-property">text</span>.<span class="cm-property">strip</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">title</span> = <span class="cm-variable">review</span>.<span class="cm-property">find</span>(<span class="cm-string">"title"</span>).<span class="cm-property">text</span>.<span class="cm-property">strip</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">date</span> = <span class="cm-variable">review</span>.<span class="cm-property">find</span>(<span class="cm-string">"date"</span>).<span class="cm-property">text</span>.<span class="cm-property">strip</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">reviewer</span> = <span class="cm-variable">review</span>.<span class="cm-property">find</span>(<span class="cm-string">"reviewer"</span>).<span class="cm-property">text</span>.<span class="cm-property">strip</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">reviewer_location</span> = <span class="cm-variable">review</span>.<span class="cm-property">find</span>(<span class="cm-string">"reviewer_location"</span>).<span class="cm-property">text</span>.<span class="cm-property">strip</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">review_text</span> = <span class="cm-variable">review</span>.<span class="cm-property">find</span>(<span class="cm-string">"review_text"</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">review_text</span> = <span class="cm-variable">review_text</span>.<span class="cm-property">text</span>.<span class="cm-property">strip</span>() <span class="cm-keyword">if</span> <span class="cm-variable">review_text</span> <span class="cm-keyword">is</span> <span class="cm-keyword">not</span> <span class="cm-keyword">None</span> <span class="cm-keyword">else</span> <span class="cm-string">""</span> </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">lists</span>.<span class="cm-property">append</span>([<span class="cm-variable">id_list</span>, <span class="cm-variable">asin</span>, <span class="cm-variable">product_name</span>, <span class="cm-variable">type_list</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">helpful</span>, <span class="cm-variable">rating</span>, <span class="cm-variable">title</span>, <span class="cm-variable">date</span>, <span class="cm-variable">reviewer</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">reviewer_location</span>, <span class="cm-variable">review_text</span>])</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">cols</span> = [<span class="cm-string">'unique_id'</span>, <span class="cm-string">'asin'</span>, <span class="cm-string">'product_name'</span>, <span class="cm-string">'product_type'</span>,<span class="cm-string">"helpful"</span>,<span class="cm-string">"rating"</span>,<span class="cm-string">"title"</span>,<span class="cm-string">"date"</span>,<span class="cm-string">"reviewer"</span>,<span class="cm-string">"reviewer_location"</span>,<span class="cm-string">"review_text"</span>]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">df</span> = <span class="cm-variable">pd</span>.<span class="cm-property">DataFrame</span>(<span class="cm-variable">lists</span>, <span class="cm-variable">columns</span>=<span class="cm-variable">cols</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">df</span>.<span class="cm-property">head</span>(<span class="cm-number">3</span>)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 605px;"></div><div class="CodeMirror-gutters" style="display: none; height: 605px;"></div></div></div></pre><figure><table><thead><tr><th style='text-align:right;' >&nbsp;</th><th style='text-align:left;' ><span>unique_id</span></th><th style='text-align:center;' ><span>asin</span></th><th style='text-align:left;' ><span>product_name</span></th><th style='text-align:left;' ><span>product_type</span></th><th style='text-align:left;' ><span>helpful</span></th><th style='text-align:center;' ><span>rating</span></th><th style='text-align:center;' ><span>title</span></th><th style='text-align:center;' ><span>date</span></th><th style='text-align:left;' ><span>reviewer</span></th><th style='text-align:left;' ><span>reviewer_location</span></th><th style='text-align:left;' ><span>review_text</span></th></tr></thead><tbody><tr><td style='text-align:right;' ><span>0</span></td><td style='text-align:left;' ><span>[B00006IUOZ :disappointi...</span></td><td style='text-align:center;' ><span>B00006I UOZ</span></td><td style='text-align:left;' ><span>Insomnia: Video: Al Pacino,Martin Donovan (II)...</span></td><td style='text-align:left;' ><span>[video, video]</span></td><td style='text-align:left;' ><span>1 of 2</span></td><td style='text-align:center;' ><span>2.0</span></td><td style='text-align:center;' ><span>Disappointing in more ways than as a remake</span></td><td style='text-align:center;' ><span>October 5, 2005</span></td><td style='text-align:left;' ><span>PipBoy</span></td><td style='text-align:left;' ><span>particularly the internal affairs sub-plot</span></td><td style='text-align:left;' ><span>It&#39;s not just that this film is a bloated rema...</span></td></tr><tr><td style='text-align:right;' ><span>1</span></td><td style='text-align:left;' ><span>[B00006JE7V :disappointi...</span></td><td style='text-align:center;' ><span>B00006 JE7V</span></td><td style='text-align:left;' ><span>Insomnia (2002) (Spanish) (Sub): Video: Al Pac...</span></td><td style='text-align:left;' ><span>[video, video]</span></td><td style='text-align:left;' ><span>1 of 2</span></td><td style='text-align:center;' ><span>2.0</span></td><td style='text-align:center;' ><span>Disappointing in more ways than as a remake</span></td><td style='text-align:center;' ><span>October 5, 2005</span></td><td style='text-align:left;' ><span>PipBoy</span></td><td style='text-align:left;' ><span>particularly the internal affairs sub-plot</span></td><td style='text-align:left;' ><span>It&#39;s not just that this film is a bloated rema...</span></td></tr><tr><td style='text-align:right;' ><span>2</span></td><td style='text-align:left;' ><span>[1569494088 :ambrose_b...</span></td><td style='text-align:center;' ><span>156949 4088</span></td><td style='text-align:left;' ><span>Schoolhouse Rock! - America Rock: Video: Jack ...</span></td><td style='text-align:left;' ><span>[video, video]</span></td><td style='text-align:left;' ><span>0 of 18</span></td><td style='text-align:center;' ><span>1.0</span></td><td style='text-align:center;' ><span>Ambrose Bierce is a Better Authority</span></td><td style='text-align:center;' ><span>July 28, 2004</span></td><td style='text-align:left;' ><span>Charlotte Tellson &quot;The Keeper of Bierce&quot;</span></td><td style='text-align:left;' >&nbsp;</td><td style='text-align:left;' ><span>I have rented this video for the sake of a tri...</span></td></tr></tbody></table></figure><h3><a name="输出保存" class="md-header-anchor"></a><span>输出保存</span></h3><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">i</span> = <span class="cm-number">0</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">for</span> <span class="cm-variable">row</span> <span class="cm-keyword">in</span> <span class="cm-variable">df</span>.<span class="cm-property">iterrows</span>():</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">with</span> <span class="cm-builtin">open</span>(<span class="cm-string">'reviews/output/review_text{}.txt'</span>.<span class="cm-property">format</span>(<span class="cm-string">'%05d'</span> <span class="cm-operator">%</span> <span class="cm-variable">i</span>), <span class="cm-string">'w'</span>, <span class="cm-variable">encoding</span>=<span class="cm-string">'utf-8'</span>) <span class="cm-keyword">as</span> <span class="cm-variable">f</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">review_text</span> = <span class="cm-variable">row</span>[<span class="cm-number">1</span>][<span class="cm-string">'review_text'</span>]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> <span class="cm-variable">review_text</span> <span class="cm-operator">!</span>= <span class="cm-string">""</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">f</span>.<span class="cm-property">write</span>(<span class="cm-variable">review_text</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">i</span> += <span class="cm-number">1</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 179px;"></div><div class="CodeMirror-gutters" style="display: none; height: 179px;"></div></div></div></pre><h1><a name="stanfordparser的使用nlp）" class="md-header-anchor"></a><span>Stanfordparser的使用（NLP）</span></h1><p><span>Stanfordparser在Linux下和windows下都可以运行，</span>
+<span>对应运行的文件后缀分别是sh和bat，</span>
+<span>另外这个工具还提供了GUI</span></p><h3><a name="加载解析器" class="md-header-anchor"></a><span>加载解析器</span></h3><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209201933.png" style="zoom: 60%"></img></p><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209202046.png" style="zoom: 67%"></img></p><h3><a name="加载文件" class="md-header-anchor"></a><span>加载文件</span></h3><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209202240.png" referrerpolicy="no-referrer"></p><h3><a name="dependency-trees" class="md-header-anchor"></a><span>dependency trees</span></h3><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209201730.png" style="zoom: 60%;"></img></p><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209202313.png" referrerpolicy="no-referrer"></p><h3><a name="lexparser修改" class="md-header-anchor"></a><span>lexparser修改</span></h3><p><span>因为我这里是windows环境，所以修改bat</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="sh"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="sh"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">java <span class="cm-attribute">-mx150m</span> <span class="cm-attribute">-cp</span> <span class="cm-string">"*;"</span> edu.stanford.nlp.parser.lexparser.LexicalizedParser <span class="cm-attribute">-outputFormat</span> <span class="cm-string">"penn,typedDependencies"</span> edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz %1</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 45px;"></div><div class="CodeMirror-gutters" style="display: none; height: 45px;"></div></div></div></pre><p><span>-mx150m:限定jvm最大内存，可以调大一些，否则碰见长句会报错中断</span></p><p><span>另外</span><code>outputFormat</code><span>改成xml不行，需要改成</span><code>xmlTree</code></p><p><span>查看输出文件：</span></p><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209201507.png" style="zoom: 40%; float:left;"></img></p><h3><a name="批量处理" class="md-header-anchor"></a><span>批量处理</span></h3><p><span>查到了bat怎么循环，但没查到数字怎么前面补0，换python做，但是不在改bat同路径下会报找不到类的错误，按网上改了</span><code>CLASSPATH</code><span>也不行，-cp后的改成绝对路径也不行，还是在StanfordParse文件夹里运行python了</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">import</span> <span class="cm-variable">os</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">from</span> <span class="cm-variable">tqdm</span> <span class="cm-keyword">import</span> <span class="cm-variable">tqdm</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">filelist</span> = <span class="cm-variable">os</span>.<span class="cm-property">listdir</span>(<span class="cm-string">'../reviews/output'</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">for</span> <span class="cm-variable">file</span> <span class="cm-keyword">in</span> <span class="cm-variable">tqdm</span>(<span class="cm-variable">filelist</span>):</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">os</span>.<span class="cm-property">system</span>(<span class="cm-string">r'.\dependencyparser.bat ../reviews/output/review_text{0}.txt &gt; ../reviews_xml/review_parsed{0}.xml'</span>.<span class="cm-property">format</span>(<span class="cm-variable">file</span>[<span class="cm-number">11</span>:<span class="cm-operator">-</span><span class="cm-number">4</span>]))</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 157px;"></div><div class="CodeMirror-gutters" style="display: none; height: 157px;"></div></div></div></pre><p><span>这样可以是可以....但是估摸着需要15个小时才能跑完，太慢了，还是扔linux服务器上跑了</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="sh"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="sh"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">for</span> i <span class="cm-keyword">in</span> <span class="cm-quote">$(seq 0 15351)</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">do</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-def">id</span><span class="cm-operator">=</span><span class="cm-quote">`printf "%05d" </span><span class="cm-def">$i</span><span class="cm-quote">`</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;<span class="cm-builtin">echo</span> <span class="cm-quote">$(./dependencyparser.sh "../reviews/output/review_text"</span><span class="cm-def">$id</span><span class="cm-quote">".txt" &gt; "../reviews_xml/review_parsed"</span><span class="cm-def">$id</span><span class="cm-quote">".xml")</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">done</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 134px;"></div><div class="CodeMirror-gutters" style="display: none; height: 134px;"></div></div></div></pre><p><span>然后跑了一夜</span></p><figure><table><thead><tr><th><span>文件</span></th><th><span>文件大小(B)</span></th></tr></thead><tbody><tr><td><span>review_text</span></td><td><span>63220</span></td></tr><tr><td><span>review_parsed</span></td><td><span>406324</span></td></tr></tbody></table></figure><h2><a name="情感词提取" class="md-header-anchor"></a><span>情感词提取</span></h2><p><span>xml中需要注意的几种缩写如下所示：</span></p><ul><li><code>JJ</code><span>: adjective or numeral, ordinal 形容词或序数词，如great</span></li><li><code>ADJP</code><span>：形容词短语，包裹了多个JJ</span></li><li><code>NN</code><span>: 名词</span></li><li><code>NP</code><span>: 名词短语</span></li></ul><p><span>我们想找到的句子一般是这样的结构：</span></p><p><code>NP</code></p><p><span>|-- </span><code>JJ</code><span> /</span><code>ADJP</code><span> +</span></p><p><span>|-- </span><code>NN</code><span> {1,1}</span></p><p><span>因为</span><code>NP</code><span>里可能嵌套</span><code>NP</code><span>，所以不能直接找</span><code>NP</code><span>，应该从底层</span><code>JJ</code><span>找起，找</span><code>JJ</code><span>上层最近的</span><code>NP</code><span>，然后往下找</span><code>NN</code><span>;</span></p><p><span>不过，如果自下而上地查找，需要判断一下是不是同一个</span><code>NP</code><span>，如果是，放一个list里面，之后可以逗号隔开生成一个string</span></p><p><span>也可以分别查找</span><code>NP</code><span>/</span><code>JJ</code><span>和</span><code>NP</code><span>/</span><code>ADJP</code><span>，再从</span><code>JJ</code><span>或者</span><code>ADJP</code><span>的父节点</span><code>NP</code><span>，再找下面的</span><code>NN</code><span>和所有的</span><code>JJ</code><span>、</span><code>ADJP</code></p><p><span>因为一个文件输出的不是一个树，需要包裹一层再解析</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">import</span> <span class="cm-variable">os</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">from</span> <span class="cm-variable">lxml</span> <span class="cm-keyword">import</span> <span class="cm-variable">etree</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">import</span> <span class="cm-variable">re</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">from</span> <span class="cm-variable">tqdm</span> <span class="cm-keyword">import</span> <span class="cm-variable">tqdm_notebook</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">result</span> = []</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">for</span> <span class="cm-variable">filename</span> <span class="cm-keyword">in</span> <span class="cm-variable">tqdm_notebook</span>(<span class="cm-variable">os</span>.<span class="cm-property">listdir</span>(<span class="cm-string">'./reviews_xml'</span>)):</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">with</span> <span class="cm-builtin">open</span>(<span class="cm-string">'./reviews_xml/'</span> <span class="cm-operator">+</span> <span class="cm-variable">filename</span>) <span class="cm-keyword">as</span> <span class="cm-variable">f</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">content</span> = <span class="cm-string">'&lt;root&gt;'</span> <span class="cm-operator">+</span> <span class="cm-string">''</span>.<span class="cm-property">join</span>(<span class="cm-variable">f</span>.<span class="cm-property">readlines</span>()) <span class="cm-operator">+</span> <span class="cm-string">'&lt;/root&gt;'</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">tree</span> = <span class="cm-variable">etree</span>.<span class="cm-property">XML</span>(<span class="cm-variable">content</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">dic</span> = {}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">nps</span> = <span class="cm-builtin">set</span>() <span class="cm-comment"># 存一下，防止地址被覆盖</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">for</span> <span class="cm-variable">jj</span> <span class="cm-keyword">in</span> <span class="cm-variable">tree</span>.<span class="cm-property">xpath</span>(<span class="cm-string">'//node[@value="NP"]/node[starts-with(@value, "JJ")]'</span>):</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">np</span> = <span class="cm-variable">jj</span>.<span class="cm-property">getparent</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> <span class="cm-builtin">len</span>(<span class="cm-variable">np</span>.<span class="cm-property">xpath</span>(<span class="cm-string">'./node[starts-with(@value, "NN")]'</span>)) == <span class="cm-number">0</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">continue</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">nn</span> = <span class="cm-variable">np</span>.<span class="cm-property">xpath</span>(<span class="cm-string">'./node[starts-with(@value, "NN")]'</span>)[<span class="cm-number">0</span>]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> <span class="cm-builtin">id</span>(<span class="cm-variable">nn</span>) <span class="cm-keyword">not</span> <span class="cm-keyword">in</span> <span class="cm-variable">dic</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">dic</span>[<span class="cm-builtin">id</span>(<span class="cm-variable">nn</span>)] = [<span class="cm-variable">nn</span>.<span class="cm-property">find</span>(<span class="cm-string">'leaf'</span>).<span class="cm-property">attrib</span>[<span class="cm-string">'value'</span>], <span class="cm-variable">jj</span>.<span class="cm-property">find</span>(<span class="cm-string">'leaf'</span>).<span class="cm-property">attrib</span>[<span class="cm-string">'value'</span>]]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">nps</span>.<span class="cm-property">add</span>(<span class="cm-variable">np</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">else</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">dic</span>[<span class="cm-builtin">id</span>(<span class="cm-variable">nn</span>)] += [<span class="cm-variable">jj</span>.<span class="cm-property">find</span>(<span class="cm-string">'leaf'</span>).<span class="cm-property">attrib</span>[<span class="cm-string">'value'</span>]]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">for</span> <span class="cm-variable">adjp</span> <span class="cm-keyword">in</span> <span class="cm-variable">tree</span>.<span class="cm-property">xpath</span>(<span class="cm-string">'//node[@value="NP"]/node[@value="ADJP"]'</span>):</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">np</span> = <span class="cm-variable">adjp</span>.<span class="cm-property">getparent</span>()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> <span class="cm-builtin">len</span>(<span class="cm-variable">np</span>.<span class="cm-property">xpath</span>(<span class="cm-string">'./node[starts-with(@value, "NN")]'</span>)) == <span class="cm-number">0</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">continue</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">nn</span> = <span class="cm-variable">np</span>.<span class="cm-property">xpath</span>(<span class="cm-string">'./node[starts-with(@value, "NN")]'</span>)[<span class="cm-number">0</span>]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">ad</span> = <span class="cm-string">" "</span>.<span class="cm-property">join</span>([<span class="cm-variable">leaf</span>.<span class="cm-property">attrib</span>[<span class="cm-string">'value'</span>] <span class="cm-keyword">for</span> <span class="cm-variable">leaf</span> <span class="cm-keyword">in</span> <span class="cm-variable">adjp</span>.<span class="cm-property">xpath</span>(<span class="cm-string">'.//leaf'</span>)])</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> <span class="cm-builtin">id</span>(<span class="cm-variable">np</span>) <span class="cm-keyword">not</span> <span class="cm-keyword">in</span> <span class="cm-variable">dic</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">dic</span>[<span class="cm-builtin">id</span>(<span class="cm-variable">np</span>)] = [<span class="cm-variable">nn</span>.<span class="cm-property">find</span>(<span class="cm-string">'leaf'</span>).<span class="cm-property">attrib</span>[<span class="cm-string">'value'</span>], <span class="cm-variable">ad</span>]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">nps</span>.<span class="cm-property">add</span>(<span class="cm-variable">np</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">else</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">dic</span>[<span class="cm-builtin">id</span>(<span class="cm-variable">np</span>)] += [<span class="cm-variable">ad</span>]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">result</span> += [(<span class="cm-variable">value</span>[<span class="cm-number">0</span>], <span class="cm-string">", "</span>.<span class="cm-property">join</span>(<span class="cm-builtin">list</span>(<span class="cm-variable">value</span>[<span class="cm-number">1</span>:]))) <span class="cm-keyword">for</span> <span class="cm-variable">value</span> <span class="cm-keyword">in</span> <span class="cm-variable">dic</span>.<span class="cm-property">values</span>()]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 829px;"></div><div class="CodeMirror-gutters" style="display: none; height: 829px;"></div></div></div></pre><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209203543.png" referrerpolicy="no-referrer"></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">import</span> <span class="cm-variable">pandas</span> <span class="cm-keyword">as</span> <span class="cm-variable">pd</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">df</span> = <span class="cm-variable">pd</span>.<span class="cm-property">DataFrame</span>(<span class="cm-variable">result</span>, <span class="cm-variable">columns</span>=[<span class="cm-string">'target'</span>, <span class="cm-string">'sentiment words or phase'</span>])</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">df</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 90px;"></div><div class="CodeMirror-gutters" style="display: none; height: 90px;"></div></div></div></pre><figure><table><thead><tr><th style='text-align:right;' >&nbsp;</th><th style='text-align:right;' ><span>target</span></th><th><span>sentiment words or phase</span></th></tr></thead><tbody><tr><td style='text-align:right;' ><span>0</span></td><td style='text-align:right;' ><span>remake</span></td><td><span>bloated</span></td></tr><tr><td style='text-align:right;' ><span>1</span></td><td style='text-align:right;' ><span>thriller</span></td><td><span>quick, clean, near-perfect, minimalist</span></td></tr><tr><td style='text-align:right;' ><span>2</span></td><td style='text-align:right;' ><span>affairs</span></td><td><span>internal, moral</span></td></tr><tr><td style='text-align:right;' ><span>3</span></td><td style='text-align:right;' ><span>shell</span></td><td><span>toned-down</span></td></tr><tr><td style='text-align:right;' ><span>4</span></td><td style='text-align:right;' ><span>performance</span></td><td><span>believable</span></td></tr><tr><td style='text-align:right;' ><span>5</span></td><td style='text-align:right;' ><span>bit</span></td><td><span>method-acting</span></td></tr><tr><td style='text-align:right;' ><span>6</span></td><td style='text-align:right;' ><span>scene</span></td><td><span>single</span></td></tr><tr><td style='text-align:right;' ><span>7</span></td><td style='text-align:right;' ><span>imitation</span></td><td><span>pale</span></td></tr><tr><td style='text-align:right;' ><span>8</span></td><td style='text-align:right;' ><span>roles</span></td><td><span>better</span></td></tr><tr><td style='text-align:right;' ><span>9</span></td><td style='text-align:right;' ><span>performances</span></td><td><span>fine</span></td></tr><tr><td style='text-align:right;' ><span>10</span></td><td style='text-align:right;' ><span>contemporaries</span></td><td><span>adult</span></td></tr><tr><td style='text-align:right;' ><span>11</span></td><td style='text-align:right;' ><span>performances</span></td><td><span>far-too-short</span></td></tr><tr><td style='text-align:right;' ><span>12</span></td><td style='text-align:right;' ><span>detective</span></td><td><span>dangerously off-kilter</span></td></tr><tr><td style='text-align:right;' ><span>13</span></td><td style='text-align:right;' ><span>characters</span></td><td><span>more complicated</span></td></tr><tr><td style='text-align:right;' ><span>14</span></td><td style='text-align:right;' ><span>director</span></td><td><span>sublimely talented</span></td></tr><tr><td style='text-align:right;' ><span>15</span></td><td style='text-align:right;' ><span>hometown</span></td><td><span>down-to-earth</span></td></tr><tr><td style='text-align:right;' ><span>16</span></td><td style='text-align:right;' ><span>change</span></td><td><span>refreshing</span></td></tr><tr><td style='text-align:right;' ><span>17</span></td><td style='text-align:right;' ><span>remake</span></td><td><span>bloated</span></td></tr><tr><td style='text-align:right;' ><span>18</span></td><td style='text-align:right;' ><span>thriller</span></td><td><span>quick, clean, near-perfect, minimalist</span></td></tr><tr><td style='text-align:right;' ><span>19</span></td><td style='text-align:right;' ><span>affairs</span></td><td><span>internal, moral</span></td></tr><tr><td style='text-align:right;' ><span>20</span></td><td style='text-align:right;' ><span>shell</span></td><td><span>toned-down</span></td></tr><tr><td style='text-align:right;' ><span>21</span></td><td style='text-align:right;' ><span>performance</span></td><td><span>believable</span></td></tr><tr><td style='text-align:right;' ><span>22</span></td><td style='text-align:right;' ><span>bit</span></td><td><span>method-acting</span></td></tr><tr><td style='text-align:right;' ><span>23</span></td><td style='text-align:right;' ><span>scene</span></td><td><span>single</span></td></tr><tr><td style='text-align:right;' ><span>24</span></td><td style='text-align:right;' ><span>imitation</span></td><td><span>pale</span></td></tr><tr><td style='text-align:right;' ><span>25</span></td><td style='text-align:right;' ><span>roles</span></td><td><span>better</span></td></tr><tr><td style='text-align:right;' ><span>26</span></td><td style='text-align:right;' ><span>performances</span></td><td><span>fine</span></td></tr><tr><td style='text-align:right;' ><span>27</span></td><td style='text-align:right;' ><span>contemporaries</span></td><td><span>adult</span></td></tr><tr><td style='text-align:right;' ><span>28</span></td><td style='text-align:right;' ><span>performances</span></td><td><span>far-too-short</span></td></tr><tr><td style='text-align:right;' ><span>29</span></td><td style='text-align:right;' ><span>detective</span></td><td><span>dangerously off-kilter</span></td></tr><tr><td style='text-align:right;' ><span>...</span></td><td style='text-align:right;' ><span>...</span></td><td><span>...</span></td></tr><tr><td style='text-align:right;' ><span>124108</span></td><td style='text-align:right;' ><span>film</span></td><td><span>Sci-Fi, Semi-Porn</span></td></tr><tr><td style='text-align:right;' ><span>124109</span></td><td style='text-align:right;' ><span>movies</span></td><td><span>randy</span></td></tr><tr><td style='text-align:right;' ><span>124110</span></td><td style='text-align:right;' ><span>science</span></td><td><span>hokey</span></td></tr><tr><td style='text-align:right;' ><span>124111</span></td><td style='text-align:right;' ><span>movies</span></td><td><span>other, similar</span></td></tr><tr><td style='text-align:right;' ><span>124112</span></td><td style='text-align:right;' ><span>Features</span></td><td><span>following, Special</span></td></tr><tr><td style='text-align:right;' ><span>124113</span></td><td style='text-align:right;' ><span>movie</span></td><td><span>average</span></td></tr><tr><td style='text-align:right;' ><span>124114</span></td><td style='text-align:right;' ><span>sense</span></td><td><span>commercial</span></td></tr><tr><td style='text-align:right;' ><span>124115</span></td><td style='text-align:right;' ><span>hokey</span></td><td><span>average</span></td></tr><tr><td style='text-align:right;' ><span>124116</span></td><td style='text-align:right;' ><span>bodies</span></td><td><span>great</span></td></tr><tr><td style='text-align:right;' ><span>124117</span></td><td style='text-align:right;' ><span>public</span></td><td><span>sexually repressed</span></td></tr><tr><td style='text-align:right;' ><span>124118</span></td><td style='text-align:right;' ><span>male</span></td><td><span>similarly attired</span></td></tr><tr><td style='text-align:right;' ><span>124119</span></td><td style='text-align:right;' ><span>sh</span></td><td><span>scared</span></td></tr><tr><td style='text-align:right;' ><span>124120</span></td><td style='text-align:right;' ><span>vignette</span></td><td><span>last and most bizarre</span></td></tr><tr><td style='text-align:right;' ><span>124121</span></td><td style='text-align:right;' ><span>sci-fi</span></td><td><span>extremely weak</span></td></tr><tr><td style='text-align:right;' ><span>124122</span></td><td style='text-align:right;' ><span>star</span></td><td><span>low four</span></td></tr><tr><td style='text-align:right;' ><span>124123</span></td><td style='text-align:right;' ><span>extravaganza</span></td><td><span>better than your average hokey Sci-Fi Semi-Porn</span></td></tr><tr><td style='text-align:right;' ><span>124124</span></td><td style='text-align:right;' ><span>science</span></td><td><span>erotic</span></td></tr><tr><td style='text-align:right;' ><span>124125</span></td><td style='text-align:right;' ><span>employee</span></td><td><span>former</span></td></tr><tr><td style='text-align:right;' ><span>124126</span></td><td style='text-align:right;' ><span>bit</span></td><td><span>least</span></td></tr><tr><td style='text-align:right;' ><span>124127</span></td><td style='text-align:right;' ><span>content</span></td><td><span>sexual</span></td></tr><tr><td style='text-align:right;' ><span>124128</span></td><td style='text-align:right;' ><span>employers</span></td><td><span>former</span></td></tr><tr><td style='text-align:right;' ><span>124129</span></td><td style='text-align:right;' ><span>knowledge</span></td><td><span>very</span></td></tr><tr><td style='text-align:right;' ><span>124130</span></td><td style='text-align:right;' ><span>stories</span></td><td><span>individual</span></td></tr><tr><td style='text-align:right;' ><span>124131</span></td><td style='text-align:right;' ><span>abduction</span></td><td><span>alien</span></td></tr><tr><td style='text-align:right;' ><span>124132</span></td><td style='text-align:right;' ><span>pilot</span></td><td><span>female</span></td></tr><tr><td style='text-align:right;' ><span>124133</span></td><td style='text-align:right;' ><span>planet</span></td><td><span>distant</span></td></tr><tr><td style='text-align:right;' ><span>124134</span></td><td style='text-align:right;' ><span>number</span></td><td><span>significant, lovely</span></td></tr><tr><td style='text-align:right;' ><span>124135</span></td><td style='text-align:right;' ><span>softcore</span></td><td><span>impressive</span></td></tr><tr><td style='text-align:right;' ><span>124136</span></td><td style='text-align:right;' ><span>proof</span></td><td><span>further</span></td></tr><tr><td style='text-align:right;' ><span>124137</span></td><td style='text-align:right;' ><span>movies</span></td><td><span>best, erotic</span></td></tr></tbody></table></figure><p><span>124138 rows × 2 columns</span></p></div>
+</body>
 </html>
-
