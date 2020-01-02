@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mogician zlf">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="数据科学导论实验_XML"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Mogician的个人小站"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://yoursite.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Mogician的个人小站" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Mogician的个人小站</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">数据科学导论实验_XML</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>" target="_blank" rel="noopener">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>" target="_blank" rel="noopener">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Mogician zlf</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-01-02</span>
+            <span class="time">20:15:48</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h1 id="XML分析和提取"><a href="#XML分析和提取" class="headerlink" title="XML分析和提取"></a>XML分析和提取</h1><blockquote>
+<p>* 图片存在github图床上，请在可以连通github的网络环境中阅读，以免图片预览失效</p>
+</blockquote>
+<p>之前有用过xml.ElementTree包，而且Beautiful Soup的方法也差不多，所以lxml上手也挺快的；<br>另外要注意，文件夹下不能有和包同名的py，比如xml.py</p>
+<h3 id="xml解析"><a href="#xml解析" class="headerlink" title="xml解析"></a>xml解析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">parser = etree.XMLParser(recover=<span class="literal">True</span>)</span><br><span class="line">tree = etree.parse(<span class="string">'reviews/video/reviews.xml'</span>,parser)</span><br><span class="line">root = tree.getroot()</span><br><span class="line">root</span><br></pre></td></tr></table></figure>
+
+
+<pre><code>&lt;Element reviews at 0x289a8d440c8&gt;</code></pre><p>报错，<code>&#39;utf-8&#39; codec can&#39;t decode byte 0xe8 in position 3278: invalid continuation byte</code></p>
+<p>utf-8解码没毛病，应当是文件的编码有问题，SublimeText里改一下文件的编码就不报错了</p>
+<h3 id="转为pandas"><a href="#转为pandas" class="headerlink" title="转为pandas"></a>转为pandas</h3><p>观察文件可以看到，reviews包含多个review，review为一行，11个字段，<br>其中<code>unique_id</code>和<code>product_type</code>字段各自重复了两次，需要合并为list</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">lists = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> review <span class="keyword">in</span> root.findall(<span class="string">'review'</span>):</span><br><span class="line">    id_list = [j.text.strip() <span class="keyword">for</span> j <span class="keyword">in</span> review.findall(<span class="string">"unique_id"</span>)]</span><br><span class="line">    asin = review.find(<span class="string">"asin"</span>).text.strip()</span><br><span class="line">    product_name = review.find(<span class="string">"product_name"</span>).text.strip()</span><br><span class="line">    type_list = [j.text.strip() <span class="keyword">for</span> j <span class="keyword">in</span> review.findall(<span class="string">"product_type"</span>)]</span><br><span class="line">    helpful = review.find(<span class="string">"helpful"</span>).text.strip()</span><br><span class="line">    rating = review.find(<span class="string">"rating"</span>).text.strip()</span><br><span class="line">    title = review.find(<span class="string">"title"</span>).text.strip()</span><br><span class="line">    date = review.find(<span class="string">"date"</span>).text.strip()</span><br><span class="line">    reviewer = review.find(<span class="string">"reviewer"</span>).text.strip()</span><br><span class="line">    reviewer_location = review.find(<span class="string">"reviewer_location"</span>).text.strip()</span><br><span class="line">    review_text = review.find(<span class="string">"review_text"</span>)</span><br><span class="line">    review_text = review_text.text.strip() <span class="keyword">if</span> review_text <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">else</span> <span class="string">""</span> </span><br><span class="line"></span><br><span class="line">    lists.append([id_list, asin, product_name, type_list, </span><br><span class="line">                    helpful, rating, title, date, reviewer,</span><br><span class="line">                    reviewer_location, review_text])</span><br><span class="line"></span><br><span class="line">cols = [<span class="string">'unique_id'</span>, <span class="string">'asin'</span>, <span class="string">'product_name'</span>, <span class="string">'product_type'</span>,<span class="string">"helpful"</span>,<span class="string">"rating"</span>,<span class="string">"title"</span>,<span class="string">"date"</span>,<span class="string">"reviewer"</span>,<span class="string">"reviewer_location"</span>,<span class="string">"review_text"</span>]</span><br><span class="line">df = pd.DataFrame(lists, columns=cols)</span><br><span class="line">df.head(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="left">unique_id</th>
+<th align="center">asin</th>
+<th align="left">product_name</th>
+<th align="left">product_type</th>
+<th align="left">helpful</th>
+<th align="center">rating</th>
+<th align="center">title</th>
+<th align="center">date</th>
+<th align="left">reviewer</th>
+<th align="left">reviewer_location</th>
+<th align="left">review_text</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td align="left">[B00006IUOZ :disappointi…</td>
+<td align="center">B00006I UOZ</td>
+<td align="left">Insomnia: Video: Al Pacino,Martin Donovan (II)…</td>
+<td align="left">[video, video]</td>
+<td align="left">1 of 2</td>
+<td align="center">2.0</td>
+<td align="center">Disappointing in more ways than as a remake</td>
+<td align="center">October 5, 2005</td>
+<td align="left">PipBoy</td>
+<td align="left">particularly the internal affairs sub-plot</td>
+<td align="left">It’s not just that this film is a bloated rema…</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="left">[B00006JE7V :disappointi…</td>
+<td align="center">B00006 JE7V</td>
+<td align="left">Insomnia (2002) (Spanish) (Sub): Video: Al Pac…</td>
+<td align="left">[video, video]</td>
+<td align="left">1 of 2</td>
+<td align="center">2.0</td>
+<td align="center">Disappointing in more ways than as a remake</td>
+<td align="center">October 5, 2005</td>
+<td align="left">PipBoy</td>
+<td align="left">particularly the internal affairs sub-plot</td>
+<td align="left">It’s not just that this film is a bloated rema…</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="left">[1569494088 :ambrose_b…</td>
+<td align="center">156949 4088</td>
+<td align="left">Schoolhouse Rock! - America Rock: Video: Jack …</td>
+<td align="left">[video, video]</td>
+<td align="left">0 of 18</td>
+<td align="center">1.0</td>
+<td align="center">Ambrose Bierce is a Better Authority</td>
+<td align="center">July 28, 2004</td>
+<td align="left">Charlotte Tellson “The Keeper of Bierce”</td>
+<td align="left"></td>
+<td align="left">I have rented this video for the sake of a tri…</td>
+</tr>
+</tbody></table>
+<h3 id="输出保存"><a href="#输出保存" class="headerlink" title="输出保存"></a>输出保存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> df.iterrows():</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'reviews/output/review_text&#123;&#125;.txt'</span>.format(<span class="string">'%05d'</span> % i), <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        review_text = row[<span class="number">1</span>][<span class="string">'review_text'</span>]</span><br><span class="line">        <span class="keyword">if</span> review_text != <span class="string">""</span>:</span><br><span class="line">            f.write(review_text)</span><br><span class="line">        i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Stanfordparser的使用（NLP）"><a href="#Stanfordparser的使用（NLP）" class="headerlink" title="Stanfordparser的使用（NLP）"></a>Stanfordparser的使用（NLP）</h1><p>Stanfordparser在Linux下和windows下都可以运行，<br>对应运行的文件后缀分别是sh和bat，<br>另外这个工具还提供了GUI</p>
+<h3 id="加载解析器"><a href="#加载解析器" class="headerlink" title="加载解析器"></a>加载解析器</h3><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209201933.png" style="zoom: 60%"></img></p>
+<p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209202046.png" style="zoom: 67%"></img></p>
+<h3 id="加载文件"><a href="#加载文件" class="headerlink" title="加载文件"></a>加载文件</h3><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209202240.png" alt=""></p>
+<h3 id="dependency-trees"><a href="#dependency-trees" class="headerlink" title="dependency trees"></a>dependency trees</h3><p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209201730.png" style="zoom: 60%;"></img></p>
+<p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209202313.png" alt=""></p>
+<h3 id="lexparser修改"><a href="#lexparser修改" class="headerlink" title="lexparser修改"></a>lexparser修改</h3><p>因为我这里是windows环境，所以修改bat</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -mx150m -cp <span class="string">"*;"</span> edu.stanford.nlp.parser.lexparser.LexicalizedParser -outputFormat <span class="string">"penn,typedDependencies"</span> edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz %1</span><br></pre></td></tr></table></figure>
+<p>-mx150m:限定jvm最大内存，可以调大一些，否则碰见长句会报错中断</p>
+<p>另外<code>outputFormat</code>改成xml不行，需要改成<code>xmlTree</code></p>
+<p>查看输出文件：</p>
+<p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209201507.png" style="zoom: 40%;"></img></p>
+<h3 id="批量处理"><a href="#批量处理" class="headerlink" title="批量处理"></a>批量处理</h3><p>查到了bat怎么循环，但没查到数字怎么前面补0，换python做，但是不在改bat同路径下会报找不到类的错误，按网上改了<code>CLASSPATH</code>也不行，-cp后的改成绝对路径也不行，还是在StanfordParse文件夹里运行python了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line">filelist = os.listdir(<span class="string">'../reviews/output'</span>)</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> tqdm(filelist):</span><br><span class="line">    os.system(<span class="string">r'.\dependencyparser.bat ../reviews/output/review_text&#123;0&#125;.txt &gt; ../reviews_xml/review_parsed&#123;0&#125;.xml'</span>.format(file[<span class="number">11</span>:<span class="number">-4</span>]))</span><br></pre></td></tr></table></figure>
+
+<p>这样可以是可以….但是估摸着需要15个小时才能跑完，太慢了，还是扔linux服务器上跑了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 0 15351)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  id=`<span class="built_in">printf</span> <span class="string">"%05d"</span> <span class="variable">$i</span>`</span><br><span class="line">  <span class="built_in">echo</span> $(./dependencyparser.sh <span class="string">"../reviews/output/review_text"</span><span class="variable">$id</span><span class="string">".txt"</span> &gt; <span class="string">"../reviews_xml/review_parsed"</span><span class="variable">$id</span><span class="string">".xml"</span>)</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>然后跑了一夜</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>文件大小(B)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>review_text</td>
+<td>63220</td>
+</tr>
+<tr>
+<td>review_parsed</td>
+<td>406324</td>
+</tr>
+</tbody></table>
+<h2 id="情感词提取"><a href="#情感词提取" class="headerlink" title="情感词提取"></a>情感词提取</h2><p>xml中需要注意的几种缩写如下所示：</p>
+<ul>
+<li><code>JJ</code>: adjective or numeral, ordinal 形容词或序数词，如great</li>
+<li><code>ADJP</code>：形容词短语，包裹了多个JJ</li>
+<li><code>NN</code>: 名词</li>
+<li><code>NP</code>: 名词短语</li>
+</ul>
+<p>我们想找到的句子一般是这样的结构：</p>
+<p><code>NP</code></p>
+<p>|– <code>JJ</code> /<code>ADJP</code> +</p>
+<p>|– <code>NN</code> {1,1}</p>
+<p>因为<code>NP</code>里可能嵌套<code>NP</code>，所以不能直接找<code>NP</code>，应该从底层<code>JJ</code>找起，找<code>JJ</code>上层最近的<code>NP</code>，然后往下找<code>NN</code>;</p>
+<p>不过，如果自下而上地查找，需要判断一下是不是同一个<code>NP</code>，如果是，放一个list里面，之后可以逗号隔开生成一个string</p>
+<p>也可以分别查找<code>NP</code>/<code>JJ</code>和<code>NP</code>/<code>ADJP</code>，再从<code>JJ</code>或者<code>ADJP</code>的父节点<code>NP</code>，再找下面的<code>NN</code>和所有的<code>JJ</code>、<code>ADJP</code></p>
+<p>因为一个文件输出的不是一个树，需要包裹一层再解析</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm_notebook</span><br><span class="line"></span><br><span class="line">result = []</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> tqdm_notebook(os.listdir(<span class="string">'./reviews_xml'</span>)):</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'./reviews_xml/'</span> + filename) <span class="keyword">as</span> f:</span><br><span class="line">        content = <span class="string">'&lt;root&gt;'</span> + <span class="string">''</span>.join(f.readlines()) + <span class="string">'&lt;/root&gt;'</span></span><br><span class="line">        tree = etree.XML(content)</span><br><span class="line">        dic = &#123;&#125;</span><br><span class="line">        nps = set() <span class="comment"># 存一下，防止地址被覆盖</span></span><br><span class="line">        <span class="keyword">for</span> jj <span class="keyword">in</span> tree.xpath(<span class="string">'//node[@value="NP"]/node[starts-with(@value, "JJ")]'</span>):</span><br><span class="line">            np = jj.getparent()</span><br><span class="line">            <span class="keyword">if</span> len(np.xpath(<span class="string">'./node[starts-with(@value, "NN")]'</span>)) == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            nn = np.xpath(<span class="string">'./node[starts-with(@value, "NN")]'</span>)[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">if</span> id(nn) <span class="keyword">not</span> <span class="keyword">in</span> dic:</span><br><span class="line">                dic[id(nn)] = [nn.find(<span class="string">'leaf'</span>).attrib[<span class="string">'value'</span>], jj.find(<span class="string">'leaf'</span>).attrib[<span class="string">'value'</span>]]</span><br><span class="line">                nps.add(np)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dic[id(nn)] += [jj.find(<span class="string">'leaf'</span>).attrib[<span class="string">'value'</span>]]</span><br><span class="line">                          </span><br><span class="line">        <span class="keyword">for</span> adjp <span class="keyword">in</span> tree.xpath(<span class="string">'//node[@value="NP"]/node[@value="ADJP"]'</span>):</span><br><span class="line">            np = adjp.getparent()</span><br><span class="line">            <span class="keyword">if</span> len(np.xpath(<span class="string">'./node[starts-with(@value, "NN")]'</span>)) == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            nn = np.xpath(<span class="string">'./node[starts-with(@value, "NN")]'</span>)[<span class="number">0</span>]</span><br><span class="line">            ad = <span class="string">" "</span>.join([leaf.attrib[<span class="string">'value'</span>] <span class="keyword">for</span> leaf <span class="keyword">in</span> adjp.xpath(<span class="string">'.//leaf'</span>)])</span><br><span class="line">            <span class="keyword">if</span> id(np) <span class="keyword">not</span> <span class="keyword">in</span> dic:</span><br><span class="line">                dic[id(np)] = [nn.find(<span class="string">'leaf'</span>).attrib[<span class="string">'value'</span>], ad]</span><br><span class="line">                nps.add(np)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dic[id(np)] += [ad]</span><br><span class="line">        result += [(value[<span class="number">0</span>], <span class="string">", "</span>.join(list(value[<span class="number">1</span>:]))) <span class="keyword">for</span> value <span class="keyword">in</span> dic.values()]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191209203543.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(result, columns=[<span class="string">'target'</span>, <span class="string">'sentiment words or phase'</span>])</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">target</th>
+<th>sentiment words or phase</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td align="right">remake</td>
+<td>bloated</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">thriller</td>
+<td>quick, clean, near-perfect, minimalist</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">affairs</td>
+<td>internal, moral</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">shell</td>
+<td>toned-down</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">performance</td>
+<td>believable</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right">bit</td>
+<td>method-acting</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="right">scene</td>
+<td>single</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="right">imitation</td>
+<td>pale</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right">roles</td>
+<td>better</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="right">performances</td>
+<td>fine</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="right">contemporaries</td>
+<td>adult</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td align="right">performances</td>
+<td>far-too-short</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td align="right">detective</td>
+<td>dangerously off-kilter</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td align="right">characters</td>
+<td>more complicated</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td align="right">director</td>
+<td>sublimely talented</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td align="right">hometown</td>
+<td>down-to-earth</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td align="right">change</td>
+<td>refreshing</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td align="right">remake</td>
+<td>bloated</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td align="right">thriller</td>
+<td>quick, clean, near-perfect, minimalist</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td align="right">affairs</td>
+<td>internal, moral</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td align="right">shell</td>
+<td>toned-down</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td align="right">performance</td>
+<td>believable</td>
+</tr>
+<tr>
+<td align="right">22</td>
+<td align="right">bit</td>
+<td>method-acting</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td align="right">scene</td>
+<td>single</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td align="right">imitation</td>
+<td>pale</td>
+</tr>
+<tr>
+<td align="right">25</td>
+<td align="right">roles</td>
+<td>better</td>
+</tr>
+<tr>
+<td align="right">26</td>
+<td align="right">performances</td>
+<td>fine</td>
+</tr>
+<tr>
+<td align="right">27</td>
+<td align="right">contemporaries</td>
+<td>adult</td>
+</tr>
+<tr>
+<td align="right">28</td>
+<td align="right">performances</td>
+<td>far-too-short</td>
+</tr>
+<tr>
+<td align="right">29</td>
+<td align="right">detective</td>
+<td>dangerously off-kilter</td>
+</tr>
+<tr>
+<td align="right">…</td>
+<td align="right">…</td>
+<td>…</td>
+</tr>
+<tr>
+<td align="right">124108</td>
+<td align="right">film</td>
+<td>Sci-Fi, Semi-Porn</td>
+</tr>
+<tr>
+<td align="right">124109</td>
+<td align="right">movies</td>
+<td>randy</td>
+</tr>
+<tr>
+<td align="right">124110</td>
+<td align="right">science</td>
+<td>hokey</td>
+</tr>
+<tr>
+<td align="right">124111</td>
+<td align="right">movies</td>
+<td>other, similar</td>
+</tr>
+<tr>
+<td align="right">124112</td>
+<td align="right">Features</td>
+<td>following, Special</td>
+</tr>
+<tr>
+<td align="right">124113</td>
+<td align="right">movie</td>
+<td>average</td>
+</tr>
+<tr>
+<td align="right">124114</td>
+<td align="right">sense</td>
+<td>commercial</td>
+</tr>
+<tr>
+<td align="right">124115</td>
+<td align="right">hokey</td>
+<td>average</td>
+</tr>
+<tr>
+<td align="right">124116</td>
+<td align="right">bodies</td>
+<td>great</td>
+</tr>
+<tr>
+<td align="right">124117</td>
+<td align="right">public</td>
+<td>sexually repressed</td>
+</tr>
+<tr>
+<td align="right">124118</td>
+<td align="right">male</td>
+<td>similarly attired</td>
+</tr>
+<tr>
+<td align="right">124119</td>
+<td align="right">sh</td>
+<td>scared</td>
+</tr>
+<tr>
+<td align="right">124120</td>
+<td align="right">vignette</td>
+<td>last and most bizarre</td>
+</tr>
+<tr>
+<td align="right">124121</td>
+<td align="right">sci-fi</td>
+<td>extremely weak</td>
+</tr>
+<tr>
+<td align="right">124122</td>
+<td align="right">star</td>
+<td>low four</td>
+</tr>
+<tr>
+<td align="right">124123</td>
+<td align="right">extravaganza</td>
+<td>better than your average hokey Sci-Fi Semi-Porn</td>
+</tr>
+<tr>
+<td align="right">124124</td>
+<td align="right">science</td>
+<td>erotic</td>
+</tr>
+<tr>
+<td align="right">124125</td>
+<td align="right">employee</td>
+<td>former</td>
+</tr>
+<tr>
+<td align="right">124126</td>
+<td align="right">bit</td>
+<td>least</td>
+</tr>
+<tr>
+<td align="right">124127</td>
+<td align="right">content</td>
+<td>sexual</td>
+</tr>
+<tr>
+<td align="right">124128</td>
+<td align="right">employers</td>
+<td>former</td>
+</tr>
+<tr>
+<td align="right">124129</td>
+<td align="right">knowledge</td>
+<td>very</td>
+</tr>
+<tr>
+<td align="right">124130</td>
+<td align="right">stories</td>
+<td>individual</td>
+</tr>
+<tr>
+<td align="right">124131</td>
+<td align="right">abduction</td>
+<td>alien</td>
+</tr>
+<tr>
+<td align="right">124132</td>
+<td align="right">pilot</td>
+<td>female</td>
+</tr>
+<tr>
+<td align="right">124133</td>
+<td align="right">planet</td>
+<td>distant</td>
+</tr>
+<tr>
+<td align="right">124134</td>
+<td align="right">number</td>
+<td>significant, lovely</td>
+</tr>
+<tr>
+<td align="right">124135</td>
+<td align="right">softcore</td>
+<td>impressive</td>
+</tr>
+<tr>
+<td align="right">124136</td>
+<td align="right">proof</td>
+<td>further</td>
+</tr>
+<tr>
+<td align="right">124137</td>
+<td align="right">movies</td>
+<td>best, erotic</td>
+</tr>
+</tbody></table>
+<p>124138 rows × 2 columns</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

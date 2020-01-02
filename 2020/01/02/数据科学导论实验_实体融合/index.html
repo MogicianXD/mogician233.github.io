@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mogician zlf">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="数据科学导论实验_实体融合"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Mogician的个人小站"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://yoursite.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Mogician的个人小站" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Mogician的个人小站</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">数据科学导论实验_实体融合</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>" target="_blank" rel="noopener">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>" target="_blank" rel="noopener">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Mogician zlf</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-01-02</span>
+            <span class="time">20:15:48</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h1 id="实体融合练习"><a href="#实体融合练习" class="headerlink" title="实体融合练习"></a>实体融合练习</h1><blockquote>
+<p>* 图片存在github图床上，请在可以连通github的网络环境中阅读，以免图片预览失效</p>
+</blockquote>
+<h2 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h2><p>两个表格中数据的格式均为 id/title/description/manufacturer/price，分隔符为 “,” </p>
+<p>Google.csv读取时格式默认则报错。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">DATA_PATH = <span class="string">"./data"</span></span><br><span class="line"></span><br><span class="line">amazon_df=pd.read_excel(DATA_PATH+<span class="string">"/Amazon.xlsx"</span>)</span><br><span class="line">google_df=pd.read_csv(DATA_PATH+<span class="string">"/Google.csv"</span>, encoding=<span class="string">'gbk'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="导入停用词"><a href="#导入停用词" class="headerlink" title="导入停用词"></a>导入停用词</h2><p>有必要去除一些常见（高频率）但没有价值的单词，以提升有价值单词的重要性。</p>
+<p>之前在爬虫中也使用过哈工大的停用词表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(DATA_PATH + <span class="string">"\stopwords.txt"</span>,<span class="string">'r'</span>) <span class="keyword">as</span> file:</span><br><span class="line">    stopwords = file.readlines()</span><br><span class="line">stopwords = [i.strip() <span class="keyword">for</span> i <span class="keyword">in</span> stopwords]</span><br></pre></td></tr></table></figure>
+
+<h2 id="求解函数"><a href="#求解函数" class="headerlink" title="求解函数"></a>求解函数</h2><p>下面两个方法不需要在使用中调用，而由rec2tok方法调用</p>
+<p>按照规范，不直接调用的方法名前最好加上下划线</p>
+<h3 id="句子分割为单词"><a href="#句子分割为单词" class="headerlink" title="句子分割为单词"></a>句子分割为单词</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">split_regex = <span class="string">r'\w+'</span><span class="comment">#所有英文单词</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_simple_tokenize</span><span class="params">(string)</span>:</span></span><br><span class="line">    <span class="string">'''全部的文本'''</span></span><br><span class="line">    string=string.lower()</span><br><span class="line">    <span class="keyword">return</span> re.findall(split_regex, string)</span><br></pre></td></tr></table></figure>
+
+<h3 id="分割字符串并清洗"><a href="#分割字符串并清洗" class="headerlink" title="分割字符串并清洗"></a>分割字符串并清洗</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_tokenize</span><span class="params">(string)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> type(string) <span class="keyword">is</span> str:</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    xx=_simple_tokenize(string)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> stopwords:</span><br><span class="line">        <span class="keyword">while</span> i <span class="keyword">in</span> xx:</span><br><span class="line">            xx.remove(i)</span><br><span class="line">    <span class="keyword">return</span> xx</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串到单词list"><a href="#字符串到单词list" class="headerlink" title="字符串到单词list"></a>字符串到单词list</h3><p>将输入的字典中标题、描述、制造商的值作为字符串，去掉停用词分割为单词列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rec2tok</span><span class="params">(x,dic)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> type(x[<span class="string">'description'</span>]) <span class="keyword">is</span> str:</span><br><span class="line">        x[<span class="string">'description'</span>]=<span class="string">''</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> type(x[<span class="string">'manufacturer'</span>]) <span class="keyword">is</span> str:</span><br><span class="line">        x[<span class="string">'manufacturer'</span>]=<span class="string">''</span></span><br><span class="line">    dic[x[<span class="string">'id'</span>]]=_tokenize(x[<span class="string">'title'</span>]+<span class="string">' '</span>+x[<span class="string">'description'</span>]+<span class="string">' '</span>+x[<span class="string">'manufacturer'</span>])</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成正向索引：文档id-gt-词"><a href="#生成正向索引：文档id-gt-词" class="headerlink" title="生成正向索引：文档id-&gt;词"></a>生成正向索引：文档id-&gt;词</h2><p>生成amazon和google信息的 ${id:[token]}$ 字典</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">amazon_rec2tok = &#123;&#125;</span><br><span class="line">google_rec2tok = &#123;&#125;</span><br><span class="line"></span><br><span class="line">amazon_df.apply(<span class="keyword">lambda</span> x:rec2tok(x,amazon_rec2tok),axis=<span class="number">1</span>)</span><br><span class="line">google_df.apply(<span class="keyword">lambda</span> x:rec2tok(x,google_rec2tok),axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成反向索引：词-gt-文档id"><a href="#生成反向索引：词-gt-文档id" class="headerlink" title="生成反向索引：词-&gt;文档id"></a>生成反向索引：词-&gt;文档id</h2><p>将 {id:[token_list]} 转为 {token:{id_list}}</p>
+<p>可以减少之后的查询时间</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">invertIndex</span><span class="params">(forward_index)</span>:</span></span><br><span class="line">    <span class="comment">#return a mapping from token to list-of-record-IDs</span></span><br><span class="line">    ans=&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> forward_index:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> forward_index[i]:</span><br><span class="line">            <span class="keyword">if</span> j <span class="keyword">in</span> ans:</span><br><span class="line">                ans[j].append(i)</span><br><span class="line">            <span class="keyword">else</span>: </span><br><span class="line">                ans[j]=[i]</span><br><span class="line">    <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">amazon_inv=invertIndex(amazon_rec2tok)</span><br></pre></td></tr></table></figure>
+
+<h2 id="统计词频"><a href="#统计词频" class="headerlink" title="统计词频"></a>统计词频</h2><h3 id="TF-IDF求解函数"><a href="#TF-IDF求解函数" class="headerlink" title="TF-IDF求解函数"></a>TF-IDF求解函数</h3><p>TF意思是词频(Term Frequency)，IDF意思是逆文本频率指数(Inverse Document Frequency)。</p>
+<p>在求TF的时候，使用了一个子方法_inc()，是统计词频的中调用的子方法</p>
+<p>$TF-IDF() = tf()*idf()$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_inc</span><span class="params">(i,dic)</span>:</span></span><br><span class="line">    <span class="comment">#i:a key in dic</span></span><br><span class="line">    <span class="comment">#dic:dic[i]++</span></span><br><span class="line">    <span class="keyword">if</span> i <span class="keyword">in</span> dic: </span><br><span class="line">        dic[i]+=<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>: </span><br><span class="line">        dic[i]=<span class="number">1</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_tf</span><span class="params">(tokens)</span>:</span></span><br><span class="line">    tfs=&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> tokens: </span><br><span class="line">        _inc(i,tfs)            </span><br><span class="line">    n=float(len(tokens))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> tfs:</span><br><span class="line">        tfs[i]/=n</span><br><span class="line">    <span class="keyword">return</span> tfs</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_idf</span><span class="params">(rec2tok)</span>:</span></span><br><span class="line">    idfs=&#123;&#125;</span><br><span class="line">    N=float(len(amazon_df)+len(google_df))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> rec2tok:</span><br><span class="line">        s=set(rec2tok[i])</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> s:</span><br><span class="line">            _inc(j,idfs)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> idfs:</span><br><span class="line">        idfs[i]=N/idfs[i]</span><br><span class="line">    <span class="keyword">return</span> idfs</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tfidf</span><span class="params">(tokens,idfs)</span>:</span></span><br><span class="line">    ans=_tf(tokens)</span><br><span class="line">    s=set(tokens)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> ans:</span><br><span class="line">        ans[i]*= idfs[i]</span><br><span class="line">    <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成每个单词的权重"><a href="#生成每个单词的权重" class="headerlink" title="生成每个单词的权重"></a>生成每个单词的权重</h3><p>根据逆文本频率倒数求每个单词的tf-idf</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line">idfs_full = dict(Counter(_idf(amazon_rec2tok))+Counter(_idf(google_rec2tok)))</span><br><span class="line">google_weights=&#123;i:tfidf(google_rec2tok[i],idfs_full) <span class="keyword">for</span> i <span class="keyword">in</span> google_rec2tok&#125;</span><br><span class="line">amazon_weights=&#123;i:tfidf(amazon_rec2tok[i],idfs_full) <span class="keyword">for</span> i <span class="keyword">in</span> amazon_rec2tok&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h2><h3 id="向量点乘"><a href="#向量点乘" class="headerlink" title="向量点乘"></a>向量点乘</h3><p>当然也可以使用numpy的内积product()或者点乘dot()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_dotprod</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    ans=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> a:</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> b: ans+=a[i]*b[i]</span><br><span class="line">    <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+<h3 id="L2范数"><a href="#L2范数" class="headerlink" title="L2范数"></a>L2范数</h3><p>欧氏距离，即求每个元素平方和的开方</p>
+<p>$ |a|_2 = \sqrt{\Sigma_ix_i^2}$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_norm</span><span class="params">(a)</span>:</span></span><br><span class="line">    ans=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> a:</span><br><span class="line">        ans+=a[i]**<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> math.sqrt(ans)</span><br></pre></td></tr></table></figure>
+
+<h4 id="求每个id中包含的单词的TF-IDF的二范数"><a href="#求每个id中包含的单词的TF-IDF的二范数" class="headerlink" title="求每个id中包含的单词的TF-IDF的二范数"></a>求每个id中包含的单词的TF-IDF的二范数</h4><p>也就是求模</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">google_norm=&#123;i:_norm(google_weights[i]) <span class="keyword">for</span> i <span class="keyword">in</span> google_weights&#125;</span><br><span class="line">amazon_norm=&#123;i:_norm(amazon_weights[i]) <span class="keyword">for</span> i <span class="keyword">in</span> amazon_weights&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="求余弦相似度"><a href="#求余弦相似度" class="headerlink" title="求余弦相似度"></a>求余弦相似度</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">buildSim</span><span class="params">(Id,weight,norm,weights,norms,inv,sims)</span>:</span></span><br><span class="line">    <span class="comment">#weights : Id-&gt;token-&gt;weight</span></span><br><span class="line">    <span class="comment">#norms : Id-&gt;norm</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> weight:</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> inv:</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> inv[i]:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> (j,Id) <span class="keyword">in</span> sims: </span><br><span class="line">                    sims[(j,Id)]= _dotprod(weight, weights[j]) / (norm *norms[j])</span><br></pre></td></tr></table></figure>
+
+<h4 id="求google和Amazon的id的相似度"><a href="#求google和Amazon的id的相似度" class="headerlink" title="求google和Amazon的id的相似度"></a>求google和Amazon的id的相似度</h4><p>通过计算 $\frac{共有词的TF-IDF形成的向量的点乘}{两者的模的乘积}$ 来计算余弦相似度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sims=&#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> google_weights:</span><br><span class="line">  buildSim(i,google_weights[i],google_norm[i],amazon_weights,amazon_norm,amazon_inv,sims)</span><br></pre></td></tr></table></figure>
+
+<h2 id="预测验证"><a href="#预测验证" class="headerlink" title="预测验证"></a>预测验证</h2><h3 id="读取准确标签"><a href="#读取准确标签" class="headerlink" title="读取准确标签"></a>读取准确标签</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将Amazon_Google_perfectMapping中的形式化为二元组</span></span><br><span class="line">perfectMap_df=pd.read_csv(DATA_PATH+<span class="string">r"\Amazon_Google_perfectMapping.csv"</span>)</span><br><span class="line">perfectMap=[]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">buildPerfectMap</span><span class="params">(x)</span>:</span> </span><br><span class="line">    perfectMap.append((x[<span class="string">'idAmazon'</span>],x[<span class="string">'idGoogleBase'</span>]))</span><br><span class="line"></span><br><span class="line">perfectMap_df.apply(buildPerfectMap,axis=<span class="number">1</span>)</span><br><span class="line">perfectMap_df.head()</span><br><span class="line"><span class="keyword">del</span> perfectMap_df</span><br></pre></td></tr></table></figure>
+
+<h3 id="找出高于门槛相似度的map"><a href="#找出高于门槛相似度的map" class="headerlink" title="找出高于门槛相似度的map"></a>找出高于门槛相似度的map</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">true_dup_sims = []</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_truepos</span><span class="params">(threshold)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> true_dup_sims</span><br><span class="line">    true_dup_sims=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> sims:</span><br><span class="line">        <span class="keyword">if</span> sims[i]&gt;threshold: </span><br><span class="line">            true_dup_sims.append(i)</span><br></pre></td></tr></table></figure>
+
+<h3 id="找出高于门槛相似度的map中不在正确map中的数量"><a href="#找出高于门槛相似度的map中不在正确map中的数量" class="headerlink" title="找出高于门槛相似度的map中不在正确map中的数量"></a>找出高于门槛相似度的map中不在正确map中的数量</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_falsepos</span><span class="params">(threshold)</span>:</span></span><br><span class="line">    ans=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> true_dup_sims:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> i <span class="keyword">in</span> perfectMap: </span><br><span class="line">            ans+=<span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+<h3 id="根据预测中正确的和预测的总的数量求准确率"><a href="#根据预测中正确的和预测的总的数量求准确率" class="headerlink" title="根据预测中正确的和预测的总的数量求准确率"></a>根据预测中正确的和预测的总的数量求准确率</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">precision</span><span class="params">(threshold)</span>:</span></span><br><span class="line">    _truepos(threshold)</span><br><span class="line">    a=len(true_dup_sims)-_falsepos(threshold)</span><br><span class="line">    b=len(true_dup_sims)</span><br><span class="line">    <span class="keyword">return</span> a*<span class="number">1.0</span>/b</span><br></pre></td></tr></table></figure>
+
+<h3 id="尝试不同的置信度"><a href="#尝试不同的置信度" class="headerlink" title="尝试不同的置信度"></a>尝试不同的置信度</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nthresholds = <span class="number">100</span></span><br><span class="line">thresholds = [float(n) / nthresholds <span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">2</span>, nthresholds)]</span><br></pre></td></tr></table></figure>
+
+<h3 id="进行预测"><a href="#进行预测" class="headerlink" title="进行预测"></a>进行预测</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p=[precision(n) <span class="keyword">for</span> n <span class="keyword">in</span> thresholds]</span><br></pre></td></tr></table></figure>
+
+<h3 id="绘图分析"><a href="#绘图分析" class="headerlink" title="绘图分析"></a>绘图分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.plot(thresholds,p)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">98</span>):</span><br><span class="line">    <span class="keyword">if</span> p[i]==max(p): </span><br><span class="line">        print(<span class="string">"阈值"</span>, thresholds[i], <span class="string">"时有最大准确率"</span>)</span><br><span class="line">print(<span class="string">"最大准确率："</span>,max(p))</span><br></pre></td></tr></table></figure>
+
+<p>阈值 0.81 时有最大准确率<br>最大准确率： 0.6351931330472103</p>
+<p><img src="https://raw.githubusercontent.com/mogician-alt/PicBed/dev/20191231174837.png" alt=""></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
